@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, fig.path='Figs/')
 ```
 
 ## Introduction
@@ -47,7 +47,7 @@ totalsteps1 <- tapply(data$steps,data$date,sum,na.rm=TRUE)
 ```
 
 2. Make a histogram of the total number of steps taken each day
-```{r}
+```{r histogram}
 hist(totalsteps1, xlab="Steps", main="Total Steps Per Day" )
 ```
 
@@ -61,12 +61,11 @@ median(totalsteps1)
 1.Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
 ```{r}
-
-
 ##Find average steps per interval
-
 avgperinterval <- tapply(data$steps,data$interval,mean,na.rm=TRUE)
+```
 
+```{r lineplot}
 ##Create line plot
 plot(row.names(avgperinterval), avgperinterval, type="l", xlab="Interval", ylab="Average Number of Steps", main="Average Number of Steps per Interval")
 ```
@@ -111,7 +110,7 @@ newdata <- newdata[order(newdata[,2],newdata[,3]),]
 
 The values are different. Imputing missing data shifted the average and median of the data.
 
-```{r}
+```{r newhist}
 ##new total steps by day
 newtotal <- tapply(newdata$steps,newdata$date,sum)
 hist(
@@ -138,7 +137,7 @@ newdata<- newdata%>%
 ```
 2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
 
-```{r}
+```{r panelplot}
 library(ggplot2)
 Interval<- newdata%>%
         group_by(interval, weektype)%>%
